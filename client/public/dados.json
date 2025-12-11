@@ -1,0 +1,549 @@
+{
+  "tabela_consolidada": [
+    {
+      "ncm": "52052310",
+      "cfop": "5901",
+      "cClasstrib_sugerido": "410999",
+      "qtd_registros": 1,
+      "status": "OK",
+      "descricao": "Fio 30/1 Penteado - 100% Algodao",
+      "nome_produto": "Fio 30/1 Penteado - 100% Algodao"
+    },
+    {
+      "ncm": "52093200",
+      "cfop": "5102",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 1,
+      "status": "OK",
+      "descricao": "Sarja FLAT 100% Algodao, Estrutura 3x1,  Largura: 1,70M ; Gr",
+      "nome_produto": "Sarja FLAT 100% Algodao, Estrutura 3x1,  Largura: 1,70M ; Gr"
+    },
+    {
+      "ncm": "52093200",
+      "cfop": "6102",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 1,
+      "status": "OK",
+      "descricao": "Sarja FLAT 100% Algodao, Estrutura 3x1,  Largura: 1,70M ; Gr",
+      "nome_produto": "Sarja FLAT 100% Algodao, Estrutura 3x1,  Largura: 1,70M ; Gr"
+    },
+    {
+      "ncm": "52093200",
+      "cfop": "6123",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 1,
+      "status": "OK",
+      "descricao": "Sarja FLAT 100% Algodao, Estrutura 3x1,  Largura: 1,70M ; Gr",
+      "nome_produto": "Sarja FLAT 100% Algodao, Estrutura 3x1,  Largura: 1,70M ; Gr"
+    },
+    {
+      "ncm": "52093200",
+      "cfop": "6911",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 1,
+      "status": "AUSENTE",
+      "descricao": "Sarja FLAT 100% Algodao, Estrutura 3x1,  Largura: 1,70M ; Gr",
+      "nome_produto": "Sarja FLAT 100% Algodao, Estrutura 3x1,  Largura: 1,70M ; Gr"
+    },
+    {
+      "ncm": "52093200",
+      "cfop": "6924",
+      "cClasstrib_sugerido": "410999",
+      "qtd_registros": 1,
+      "status": "OK",
+      "descricao": "Sarja FLAT 100% Algodao, Estrutura 3x1,  Largura: 1,70M ; Gr",
+      "nome_produto": "Sarja FLAT 100% Algodao, Estrutura 3x1,  Largura: 1,70M ; Gr"
+    },
+    {
+      "ncm": "54023310",
+      "cfop": "5901",
+      "cClasstrib_sugerido": "410999",
+      "qtd_registros": 1,
+      "status": "OK",
+      "descricao": "FIO 150/96 SIM 100% Poliester",
+      "nome_produto": "FIO 150/96 SIM 100% Poliester"
+    },
+    {
+      "ncm": "55095100",
+      "cfop": "5901",
+      "cClasstrib_sugerido": "410999",
+      "qtd_registros": 1,
+      "status": "OK",
+      "descricao": "FIO 30/1 P.V. 67% Poliester + 33% Viscose Vortex",
+      "nome_produto": "FIO 30/1 P.V. 67% Poliester + 33% Viscose Vortex"
+    },
+    {
+      "ncm": "60011010",
+      "cfop": "5101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 3,
+      "status": "OK",
+      "descricao": "Moletom 55% Algodao, 45% Poliester 3 cabos, larg.1,80 mt,  3",
+      "nome_produto": "Moletom 55% Algodao, 45% Poliester 3 cabos, larg.1,80 mt,  3"
+    },
+    {
+      "ncm": "60011010",
+      "cfop": "6101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 3,
+      "status": "OK",
+      "descricao": "Moletom 55% Algodao, 45% Poliester 3 cabos, larg.1,80 mt,  3",
+      "nome_produto": "Moletom 55% Algodao, 45% Poliester 3 cabos, larg.1,80 mt,  3"
+    },
+    {
+      "ncm": "60011010",
+      "cfop": "6501",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 1,
+      "status": "AUSENTE",
+      "descricao": "Moletom 55% Algodao, 45% Poliester 3 cabos, larg.1,80 mt,  3",
+      "nome_produto": "Moletom 55% Algodao, 45% Poliester 3 cabos, larg.1,80 mt,  3"
+    },
+    {
+      "ncm": "60041012",
+      "cfop": "5101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 2,
+      "status": "OK",
+      "descricao": "Active Stretch 96% Poliester,  4% Elastano, Larg. 1,70 mt, 2",
+      "nome_produto": "Active Stretch 96% Poliester,  4% Elastano, Larg. 1,70 mt, 2"
+    },
+    {
+      "ncm": "60041012",
+      "cfop": "6101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 2,
+      "status": "OK",
+      "descricao": "Action Stretch UV 86,67 % Poliester,  13,33 % Elastano Larg.",
+      "nome_produto": "Action Stretch UV 86,67 % Poliester,  13,33 % Elastano Larg."
+    },
+    {
+      "ncm": "60041012",
+      "cfop": "6911",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 1,
+      "status": "AUSENTE",
+      "descricao": "Action Stretch UV 86,67 % Poliester,  13,33 % Elastano Larg.",
+      "nome_produto": "Action Stretch UV 86,67 % Poliester,  13,33 % Elastano Larg."
+    },
+    {
+      "ncm": "60041032",
+      "cfop": "5101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 2,
+      "status": "OK",
+      "descricao": "Mundy Stretch 88% Poliamida, 12% Elastano Text.Ar, Larg.1,60",
+      "nome_produto": "Mundy Stretch 88% Poliamida, 12% Elastano Text.Ar, Larg.1,60"
+    },
+    {
+      "ncm": "60041032",
+      "cfop": "5911",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 1,
+      "status": "AUSENTE",
+      "descricao": "Mundy Stretch 88% Poliamida, 12% Elastano Text.Ar, Larg.1,60",
+      "nome_produto": "Mundy Stretch 88% Poliamida, 12% Elastano Text.Ar, Larg.1,60"
+    },
+    {
+      "ncm": "60041032",
+      "cfop": "6101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 2,
+      "status": "OK",
+      "descricao": "Mundy Stretch 88% Poliamida, 12% Elastano Text.Ar, Larg.1,60",
+      "nome_produto": "Mundy Stretch 88% Poliamida, 12% Elastano Text.Ar, Larg.1,60"
+    },
+    {
+      "ncm": "60041032",
+      "cfop": "6911",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 1,
+      "status": "AUSENTE",
+      "descricao": "Mundy Stretch 88% Poliamida, 12% Elastano Text.Ar, Larg.1,60",
+      "nome_produto": "Mundy Stretch 88% Poliamida, 12% Elastano Text.Ar, Larg.1,60"
+    },
+    {
+      "ncm": "60062200",
+      "cfop": "5101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 1,
+      "status": "OK",
+      "descricao": "Malha Penteada Premium 100% Algodao, larg. 1,20 mt, 160 g/m²",
+      "nome_produto": "Malha Penteada Premium 100% Algodao, larg. 1,20 mt, 160 g/m²"
+    },
+    {
+      "ncm": "60062200",
+      "cfop": "6101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 1,
+      "status": "OK",
+      "descricao": "Malha Penteada Premium 100% Algodao, larg. 1,20 mt, 160 g/m²",
+      "nome_produto": "Malha Penteada Premium 100% Algodao, larg. 1,20 mt, 160 g/m²"
+    },
+    {
+      "ncm": "60063120",
+      "cfop": "6101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 1,
+      "status": "OK",
+      "descricao": "Forro 100% Poliester,  larg. 1,35 mt, 0,90 g/m² (tubular)",
+      "nome_produto": "Forro 100% Poliester,  larg. 1,35 mt, 0,90 g/m² (tubular)"
+    },
+    {
+      "ncm": "60063220",
+      "cfop": "5101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 13,
+      "status": "OK",
+      "descricao": "DRY Confort 100% Poliester larg.1,88mt, 130 g/m²",
+      "nome_produto": "DRY Confort 100% Poliester larg.1,88mt, 130 g/m²"
+    },
+    {
+      "ncm": "60063220",
+      "cfop": "5911",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 2,
+      "status": "AUSENTE",
+      "descricao": "DRY Confort 100% Poliester larg.1,88mt, 130 g/m²",
+      "nome_produto": "DRY Confort 100% Poliester larg.1,88mt, 130 g/m²"
+    },
+    {
+      "ncm": "60063220",
+      "cfop": "6101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 15,
+      "status": "OK",
+      "descricao": "DRY Confort 100% Poliester larg.1,88mt, 130 g/m²",
+      "nome_produto": "DRY Confort 100% Poliester larg.1,88mt, 130 g/m²"
+    },
+    {
+      "ncm": "60063220",
+      "cfop": "6122",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 1,
+      "status": "AUSENTE",
+      "descricao": "Ribana Colegial 97%Poliester, 3%Elastano, larg. 0,50 cm",
+      "nome_produto": "Ribana Colegial 97%Poliester, 3%Elastano, larg. 0,50 cm"
+    },
+    {
+      "ncm": "60063220",
+      "cfop": "6501",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 1,
+      "status": "AUSENTE",
+      "descricao": "Dry Sports 100% Poliester, larg.1,80 mt, 138 g/m²",
+      "nome_produto": "Dry Sports 100% Poliester, larg.1,80 mt, 138 g/m²"
+    },
+    {
+      "ncm": "60063220",
+      "cfop": "6911",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 1,
+      "status": "AUSENTE",
+      "descricao": "DRY Confort 100% Poliester larg.1,85mt, 125",
+      "nome_produto": "DRY Confort 100% Poliester larg.1,85mt, 125"
+    },
+    {
+      "ncm": "60063220",
+      "cfop": "6924",
+      "cClasstrib_sugerido": "410999",
+      "qtd_registros": 1,
+      "status": "OK",
+      "descricao": "Ribana Colegial 97%Poliester, 3%Elastano, larg. 0,50 cm",
+      "nome_produto": "Ribana Colegial 97%Poliester, 3%Elastano, larg. 0,50 cm"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "5101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 11,
+      "status": "OK",
+      "descricao": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81",
+      "nome_produto": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "5122",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 2,
+      "status": "AUSENTE",
+      "descricao": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81",
+      "nome_produto": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "5911",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 2,
+      "status": "AUSENTE",
+      "descricao": "Piquet Ingles Dry Premium 53%Poliamida; 47%Algodao, larg.1,8",
+      "nome_produto": "Piquet Ingles Dry Premium 53%Poliamida; 47%Algodao, larg.1,8"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "6101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 10,
+      "status": "OK",
+      "descricao": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81",
+      "nome_produto": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "6107",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 2,
+      "status": "OK",
+      "descricao": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81",
+      "nome_produto": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "6122",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 3,
+      "status": "AUSENTE",
+      "descricao": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81",
+      "nome_produto": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "6501",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 1,
+      "status": "AUSENTE",
+      "descricao": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81",
+      "nome_produto": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "6911",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 5,
+      "status": "AUSENTE",
+      "descricao": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81",
+      "nome_produto": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "6924",
+      "cClasstrib_sugerido": "410999",
+      "qtd_registros": 3,
+      "status": "OK",
+      "descricao": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81",
+      "nome_produto": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "5101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 26,
+      "status": "OK",
+      "descricao": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²",
+      "nome_produto": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "5122",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 5,
+      "status": "AUSENTE",
+      "descricao": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²",
+      "nome_produto": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "5911",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 2,
+      "status": "AUSENTE",
+      "descricao": "Gola Polo 50% Poliester, 50% Algodao,  larg.0,42 cm",
+      "nome_produto": "Gola Polo 50% Poliester, 50% Algodao,  larg.0,42 cm"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "5924",
+      "cClasstrib_sugerido": "410999",
+      "qtd_registros": 5,
+      "status": "OK",
+      "descricao": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²",
+      "nome_produto": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "6101",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 27,
+      "status": "OK",
+      "descricao": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²",
+      "nome_produto": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "6107",
+      "cClasstrib_sugerido": "000001",
+      "qtd_registros": 4,
+      "status": "OK",
+      "descricao": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²",
+      "nome_produto": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "6122",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 12,
+      "status": "AUSENTE",
+      "descricao": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²",
+      "nome_produto": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "6501",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 7,
+      "status": "AUSENTE",
+      "descricao": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²",
+      "nome_produto": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "6911",
+      "cClasstrib_sugerido": null,
+      "qtd_registros": 9,
+      "status": "AUSENTE",
+      "descricao": "Gola Polo Stretch 50% Poliester, 50% Algodao,  larg.0,42 cm",
+      "nome_produto": "Gola Polo Stretch 50% Poliester, 50% Algodao,  larg.0,42 cm"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "6924",
+      "cClasstrib_sugerido": "410999",
+      "qtd_registros": 12,
+      "status": "OK",
+      "descricao": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²",
+      "nome_produto": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²"
+    }
+  ],
+  "casos_ausentes": [
+    {
+      "ncm": "52093200",
+      "cfop": "6911",
+      "qtd_registros": 1,
+      "descricao": "Sarja FLAT 100% Algodao, Estrutura 3x1,  Largura: 1,70M ; Gr"
+    },
+    {
+      "ncm": "60011010",
+      "cfop": "6501",
+      "qtd_registros": 1,
+      "descricao": "Moletom 55% Algodao, 45% Poliester 3 cabos, larg.1,80 mt,  3"
+    },
+    {
+      "ncm": "60041012",
+      "cfop": "6911",
+      "qtd_registros": 1,
+      "descricao": "Action Stretch UV 86,67 % Poliester,  13,33 % Elastano Larg."
+    },
+    {
+      "ncm": "60041032",
+      "cfop": "5911",
+      "qtd_registros": 1,
+      "descricao": "Mundy Stretch 88% Poliamida, 12% Elastano Text.Ar, Larg.1,60"
+    },
+    {
+      "ncm": "60041032",
+      "cfop": "6911",
+      "qtd_registros": 1,
+      "descricao": "Mundy Stretch 88% Poliamida, 12% Elastano Text.Ar, Larg.1,60"
+    },
+    {
+      "ncm": "60063220",
+      "cfop": "5911",
+      "qtd_registros": 2,
+      "descricao": "DRY Confort 100% Poliester larg.1,88mt, 130 g/m²"
+    },
+    {
+      "ncm": "60063220",
+      "cfop": "6122",
+      "qtd_registros": 1,
+      "descricao": "Ribana Colegial 97%Poliester, 3%Elastano, larg. 0,50 cm"
+    },
+    {
+      "ncm": "60063220",
+      "cfop": "6501",
+      "qtd_registros": 1,
+      "descricao": "Dry Sports 100% Poliester, larg.1,80 mt, 138 g/m²"
+    },
+    {
+      "ncm": "60063220",
+      "cfop": "6911",
+      "qtd_registros": 1,
+      "descricao": "DRY Confort 100% Poliester larg.1,85mt, 125"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "5122",
+      "qtd_registros": 2,
+      "descricao": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "5911",
+      "qtd_registros": 2,
+      "descricao": "Piquet Ingles Dry Premium 53%Poliamida; 47%Algodao, larg.1,8"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "6122",
+      "qtd_registros": 3,
+      "descricao": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "6501",
+      "qtd_registros": 1,
+      "descricao": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81"
+    },
+    {
+      "ncm": "60063290",
+      "cfop": "6911",
+      "qtd_registros": 5,
+      "descricao": "Malha, 65% Poliester,  35% Viscose, ANTI-Pilling, larg.1,81"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "5122",
+      "qtd_registros": 5,
+      "descricao": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "5911",
+      "qtd_registros": 2,
+      "descricao": "Gola Polo 50% Poliester, 50% Algodao,  larg.0,42 cm"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "6122",
+      "qtd_registros": 12,
+      "descricao": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "6501",
+      "qtd_registros": 7,
+      "descricao": "Piquet Ingles 53%Algodao,47% Poliester,larg.1,84mt,165 g/m²"
+    },
+    {
+      "ncm": "60069000",
+      "cfop": "6911",
+      "qtd_registros": 9,
+      "descricao": "Gola Polo Stretch 50% Poliester, 50% Algodao,  larg.0,42 cm"
+    }
+  ],
+  "resumo": {
+    "total_combinacoes": 47,
+    "total_ok": 28,
+    "total_ausente": 19,
+    "total_multiplo": 0
+  }
+}
