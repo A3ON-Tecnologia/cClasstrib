@@ -36,6 +36,7 @@ interface DadosJson {
     nome: string;
     cnpj: string;
   };
+  cfops_na: string[];
 }
 
 const __filename = fileURLToPath(import.meta.url);
@@ -201,6 +202,7 @@ async function startServer() {
           casos_ausentes,
           resumo,
           empresa,
+          cfops_na: Array.from(cfopsSemCclasstrib),
         };
 
         return res.json(payload);

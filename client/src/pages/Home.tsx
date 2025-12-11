@@ -33,6 +33,7 @@ interface DadosJson {
     nome: string;
     cnpj: string;
   };
+  cfops_na: string[];
 }
 
 interface NCMAgrupado {
@@ -57,6 +58,26 @@ export default function Home() {
   const [ncmsAgrupados, setNcmsAgrupados] = useState<NCMAgrupado[]>([]);
   const [expandidos, setExpandidos] = useState<Set<string>>(new Set());
   const [paginaAtual, setPaginaAtual] = useState(1);
+  const [progressoUpload, setProgressoUpload] = useState(0);
+  const [mostrarCfopsNa, setMostrarCfopsNa] = useState(false);
+
+  // Progresso "simulado" do processamento da planilha
+  useEffect(() => {
+    if (!enviando) {
+      setProgressoUpload(0);
+      return;
+    }
+
+    let valor = 0;
+    setProgressoUpload(0);
+
+    const id = window.setInterval(() => {
+      valor = Math.min(valor + 5, 90); // sobe até 90% enquanto processa
+      setProgressoUpload(valor);
+    }, 200);
+
+    return () => window.clearInterval(id);
+  }, [enviando]);
 
   useEffect(() => {
     // Inicialmente, não carrega nenhum dado.
@@ -136,8 +157,9 @@ export default function Home() {
     event.preventDefault();
     if (!arquivo) return;
 
+    setEnviando(true);
+
     try {
-      setEnviando(true);
       const formData = new FormData();
       formData.append("file", arquivo);
 
@@ -293,7 +315,7 @@ export default function Home() {
             <div className="bg-slate-50 rounded-xl shadow-md p-6 border-l-4 border-amber-500 flex flex-col items-center justify-center text-center">
               <div className="w-full flex justify-end mb-1">
                 <CornerDownRight
-                  size={25}
+                  size={28}
                   className="text-[#0b288b] hidden md:block"
                   aria-hidden="true"
                 />
@@ -309,7 +331,7 @@ export default function Home() {
             <div className="bg-slate-50 rounded-xl shadow-md p-6 border-l-4 border-slate-500 flex flex-col items-center justify-center text-center">
               <div className="w-full flex justify-start mb-1">
                 <CornerDownLeft
-                  size={25}
+                  size={28}
                   className="text-[#0b288b] hidden md:block"
                   aria-hidden="true"
                 />
@@ -364,6 +386,21 @@ export default function Home() {
                 {enviando ? "Enviando..." : "Enviar planilha"}
               </Button>
             </form>
+
+            {enviando && (
+              <div className="mt-3 w-full">
+                <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
+                  <div
+                    className="h-2 bg-gradient-to-r from-[#0b288b] to-[#e85909] transition-all duration-150"
+                    style={{ width: `${progressoUpload}%` }}
+                  />
+                </div>
+                <p className="mt-1 text-xs font-medium text-slate-700">
+                  {progressoUpload}% processando planilha...
+                </p>
+              </div>
+            )}
+
           </div>
 
         </div>
