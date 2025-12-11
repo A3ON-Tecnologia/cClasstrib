@@ -30,6 +30,7 @@ interface DadosJson {
     total_ok: number;
     total_ausente: number;
     total_multiplo: number;
+    total_cfop_na: number;
   };
   empresa?: {
     nome: string;
@@ -141,15 +142,34 @@ async function startServer() {
             descricao: item.descricao,
           }));
 
+        const total_combinacoes = tabela_consolidada.length;
+
+        // total_ausente: quantos registros não tiveram cClasstrib encontrado (N/A)
+        const cfopsSemCclasstrib = new Set<string>();
+        const total_ausente = tabela_consolidada.filter((item) => {
+          const valor = item.cClasstrib_sugerido;
+          const naoTem =
+            !valor || String(valor).trim().toUpperCase() === "N/A";
+
+          if (naoTem) {
+            // Agrupado por CFOP apenas (independente do NCM)
+            cfopsSemCclasstrib.add(item.cfop);
+          }
+
+          return naoTem;
+        }).length;
+
+        const total_cfop_na = cfopsSemCclasstrib.size;
+
+        // total_ok: diferença entre total de combinações e os que estão com cClasstrib = N/A
+        const total_ok = total_combinacoes - total_ausente;
+
         const resumo: DadosJson["resumo"] = {
-          total_combinacoes: tabela_consolidada.length,
-          total_ok: tabela_consolidada.filter(
-            (item) => item.status === "OK"
-          ).length,
-          total_ausente: tabela_consolidada.filter(
-            (item) => item.status === "AUSENTE"
-          ).length,
+          total_combinacoes,
+          total_ok,
+          total_ausente,
           total_multiplo: 0,
+          total_cfop_na,
         };
 
         let empresa: DadosJson["empresa"] = undefined;

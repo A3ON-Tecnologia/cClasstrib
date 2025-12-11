@@ -1,5 +1,6 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
-import { CheckCircle, ChevronDown, ChevronRight } from "lucide-react";
+// LISTA DE ICONES/ COMPONENTES LUCIDE REACT
+import { CheckCircle, ChevronDown, ChevronRight, ArrowLeftRight, CornerDownLeft, CornerDownRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import * as XLSX from "xlsx";
 
@@ -26,6 +27,7 @@ interface DadosJson {
     total_ok: number;
     total_ausente: number;
     total_multiplo: number;
+    total_cfop_na: number;
   };
   empresa?: {
     nome: string;
@@ -40,9 +42,10 @@ interface NCMAgrupado {
 }
 
 const formatarCClasstrib = (valor: string | null): string => {
-  if (!valor) return "N/A";
+  if (!valor) return "Não Encontrado";
   const limpo = String(valor).trim();
-  if (!limpo || limpo === "N/A") return "N/A";
+  if (!limpo || limpo === "N/A" || limpo === "Não Encontrado")
+    return "Não Encontrado";
   return limpo.padStart(6, "0");
 };
 
@@ -220,7 +223,7 @@ export default function Home() {
     );
   }
 
-      return (
+  return (
     <div className="min-h-screen bg-slate-950">
       <header className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-slate-800">
         <div className="container mx-auto px-6 py-10">
@@ -233,7 +236,7 @@ export default function Home() {
                 </h2>
                 <p className="text-sm font-medium text-slate-300">
                   <span className="font-semibold">CNPJ:</span>{" "}
-                  {dados?.empresa?.cnpj || "N/A"}
+                  {dados?.empresa?.cnpj || "Não Encontrado"}
                 </p>
               </div>
 
@@ -266,30 +269,59 @@ export default function Home() {
       </header>
 
 
-
-            <main className="container mx-auto px-4 py-8 space-y-6 bg-white">
+      <main className="container mx-auto px-4 py-8 space-y-6 bg-white">
         {dados && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {/* 1) Total de NCM (definidos + não encontrados) */}
             <div className="bg-slate-50 rounded-xl shadow-md p-6 border-l-4 border-blue-500 flex flex-col items-center justify-center text-center">
               <div className="text-3xl font-bold text-[#0b288b] mb-2">
                 {dados.resumo.total_combinacoes}
               </div>
-              <p className="text-slate-600 text-sm">Combinações NCM × CFOP</p>
+              <p className="text-slate-600 text-sm">
+                Total de NCM analisados
+              </p>
             </div>
+
+            {/* 2) Definidos automaticamente */}
             <div className="bg-slate-50 rounded-xl shadow-md p-6 border-l-4 border-green-500 flex flex-col items-center justify-center text-center">
               <div className="text-3xl font-bold text-[#0b288b] mb-2">
                 {dados.resumo.total_ok}
               </div>
-              <p className="text-slate-600 text-sm">Com cClasstrib definido</p>
+              <p className="text-slate-600 text-sm">Definidos automaticamente</p>
             </div>
+
             <div className="bg-slate-50 rounded-xl shadow-md p-6 border-l-4 border-amber-500 flex flex-col items-center justify-center text-center">
+              <div className="w-full flex justify-end mb-1">
+                <CornerDownRight
+                  size={25}
+                  className="text-[#0b288b] hidden md:block"
+                  aria-hidden="true"
+                />
+              </div>
               <div className="text-3xl font-bold text-[#0b288b] mb-2">
                 {dados.resumo.total_ausente}
               </div>
-              <p className="text-slate-600 text-sm">cClasstrib ausente</p>
+              <p className="text-slate-600 text-sm">cClasstrib Não Encontrado</p>
+            </div>
+
+
+            {/* 4) CFOPs Não Encontrados (distintos) */}
+            <div className="bg-slate-50 rounded-xl shadow-md p-6 border-l-4 border-slate-500 flex flex-col items-center justify-center text-center">
+              <div className="w-full flex justify-start mb-1">
+                <CornerDownLeft
+                  size={25}
+                  className="text-[#0b288b] hidden md:block"
+                  aria-hidden="true"
+                />
+              </div>
+              <div className="text-3xl font-bold text-[#0b288b] mb-2">
+                {dados.resumo.total_cfop_na}
+              </div>
+              <p className="text-slate-600 text-sm">CFOPs Não Encontrados</p>
             </div>
           </div>
         )}
+
 
 
         <div className="bg-white rounded-lg shadow-sm p-4">
@@ -337,7 +369,7 @@ export default function Home() {
         </div>
 
         {/* Bloco principal agora em layout de página cheia */}
-          <section className="space-y-6">
+        <section className="space-y-6">
           <div className="bg-gradient-to-r from-[#0b288b] via-[#0b288b] to-[#e85909] px-6 py-4 flex items-center justify-between text-white">
             <h2 className="text-2xl font-bold">
               Análise por NCM / CFOP / cClasstrib
@@ -347,96 +379,96 @@ export default function Home() {
             </div>
           </div>
 
-            <div className="flex-1 p-6 space-y-6">
-              {ncmsAgrupados.length > 0 ? (
-                <>
-                  <div className="space-y-3">
-                    {ncmsAgrupados
-                      .slice((paginaAtual - 1) * 10, paginaAtual * 10)
-                      .map((ncmGrupo) => (
-                    <div
-                      key={ncmGrupo.ncm}
-                      className="border border-slate-200 border-l-4 border-l-blue-500 rounded-lg overflow-hidden"
-                    >
-                      <button
-                        onClick={() => toggleExpandir(ncmGrupo.ncm)}
-                        className="w-full bg-slate-50 hover:bg-slate-100 transition-colors px-6 py-4 flex items-center justify-between"
+          <div className="flex-1 p-6 space-y-6">
+            {ncmsAgrupados.length > 0 ? (
+              <>
+                <div className="space-y-3">
+                  {ncmsAgrupados
+                    .slice((paginaAtual - 1) * 10, paginaAtual * 10)
+                    .map((ncmGrupo) => (
+                      <div
+                        key={ncmGrupo.ncm}
+                        className="border border-slate-200 border-l-4 border-l-blue-500 rounded-lg overflow-hidden"
                       >
-              <div className="flex items-center gap-4 flex-1 text-left">
+                        <button
+                          onClick={() => toggleExpandir(ncmGrupo.ncm)}
+                          className="w-full bg-slate-50 hover:bg-slate-100 transition-colors px-6 py-4 flex items-center justify-between"
+                        >
+                          <div className="flex items-center gap-4 flex-1 text-left">
                             <div className="flex-shrink-0">
-                            {expandidos.has(ncmGrupo.ncm) ? (
-                              <ChevronDown size={20} className="text-[#0b288b]" />
-                            ) : (
-                              <ChevronRight
-                                size={20}
-                                className="text-slate-400"
-                              />
-                            )}
+                              {expandidos.has(ncmGrupo.ncm) ? (
+                                <ChevronDown size={20} className="text-[#0b288b]" />
+                              ) : (
+                                <ChevronRight
+                                  size={20}
+                                  className="text-slate-400"
+                                />
+                              )}
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="text-lg font-bold text-slate-900">
+                                NCM: {ncmGrupo.ncm}
+                              </h3>
+                              {ncmGrupo.descricao && (
+                                <p className="text-sm text-slate-600 mt-1">
+                                  {ncmGrupo.descricao}
+                                </p>
+                              )}
+                            </div>
                           </div>
-                          <div className="flex-1">
-                            <h3 className="text-lg font-bold text-slate-900">
-                              NCM: {ncmGrupo.ncm}
-                            </h3>
-                            {ncmGrupo.descricao && (
-                              <p className="text-sm text-slate-600 mt-1">
-                                {ncmGrupo.descricao}
-                              </p>
-                            )}
+                          <div className="flex items-center gap-3 flex-shrink-0">
+                            <span className="text-sm font-medium text-slate-600 bg-slate-200 px-3 py-1 rounded-full">
+                              {ncmGrupo.cfops.length} CFOP
+                              {ncmGrupo.cfops.length !== 1 ? "s" : ""}
+                            </span>
                           </div>
-                        </div>
-                        <div className="flex items-center gap-3 flex-shrink-0">
-                          <span className="text-sm font-medium text-slate-600 bg-slate-200 px-3 py-1 rounded-full">
-                            {ncmGrupo.cfops.length} CFOP
-                            {ncmGrupo.cfops.length !== 1 ? "s" : ""}
-                          </span>
-                        </div>
-                      </button>
+                        </button>
 
-                      {expandidos.has(ncmGrupo.ncm) && (
-                        <div className="bg-white border-t border-slate-200 divide-y divide-slate-200">
-                          {ncmGrupo.cfops.map((cfop, idx) => (
-                            <div
-                              key={`${ncmGrupo.ncm}-${cfop.cfop}-${idx}`}
-                              className="px-6 py-4 hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-b-0"
-                            >
-                              <div className="space-y-3">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                  <div>
-                                    <p className="text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1">
-                                      CFOP
-                                    </p>
-                                    <p className="text-lg font-bold text-slate-900">
-                                      {cfop.cfop}
-                                    </p>
-                                  </div>
-                                  <div>
-                                    <p className="text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1">
-                                      cClasstrib sugerido
-                                    </p>
-                                    <p className="text-lg font-bold font-mono">
-                                      {formatarCClasstrib(
-                                        cfop.cClasstrib_sugerido
-                                      ) === "N/A" ? (
-                                        <span className="text-amber-600">
-                                          N/A
-                                        </span>
-                                      ) : (
-                                        <span className="text-green-600">
-                                          {formatarCClasstrib(
-                                            cfop.cClasstrib_sugerido
-                                          )}
-                                        </span>
-                                      )}
-                                    </p>
+                        {expandidos.has(ncmGrupo.ncm) && (
+                          <div className="bg-white border-t border-slate-200 divide-y divide-slate-200">
+                            {ncmGrupo.cfops.map((cfop, idx) => (
+                              <div
+                                key={`${ncmGrupo.ncm}-${cfop.cfop}-${idx}`}
+                                className="px-6 py-4 hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-b-0"
+                              >
+                                <div className="space-y-3">
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                      <p className="text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1">
+                                        CFOP
+                                      </p>
+                                      <p className="text-lg font-bold text-slate-900">
+                                        {cfop.cfop}
+                                      </p>
+                                    </div>
+                                    <div>
+                                      <p className="text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1">
+                                        cClasstrib sugerido
+                                      </p>
+                                      <p className="text-lg font-bold font-mono">
+                                        {formatarCClasstrib(
+                                          cfop.cClasstrib_sugerido
+                                        ) === "Não Encontrado" ? (
+                                          <span className="text-[#e85909]">
+                                            Não Encontrado
+                                          </span>
+                                        ) : (
+                                          <span className="text-green-600">
+                                            {formatarCClasstrib(
+                                              cfop.cClasstrib_sugerido
+                                            )}
+                                          </span>
+                                        )}
+                                      </p>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
                 </div>
 
                 {/* Paginação */}
