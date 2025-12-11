@@ -48,7 +48,7 @@ const formatarCClasstrib = (valor: string | null): string => {
 
 export default function Home() {
   const [dados, setDados] = useState<DadosJson | null>(null);
-  const [carregando, setCarregando] = useState(true);
+  const [carregando, setCarregando] = useState(false);
   const [arquivo, setArquivo] = useState<File | null>(null);
   const [enviando, setEnviando] = useState(false);
   const [ncmsAgrupados, setNcmsAgrupados] = useState<NCMAgrupado[]>([]);
@@ -56,20 +56,11 @@ export default function Home() {
   const [paginaAtual, setPaginaAtual] = useState(1);
 
   useEffect(() => {
-    const carregarDados = async () => {
-      try {
-        const resposta = await fetch("/dados.json");
-        const json = await resposta.json();
-        setDados(json);
-        atualizarAgrupamento(json.tabela_consolidada);
-        setCarregando(false);
-      } catch (erro) {
-        console.error("Erro ao carregar dados:", erro);
-        setCarregando(false);
-      }
-    };
-
-    carregarDados();
+    // Inicialmente, não carrega nenhum dado.
+    // Os valores só serão preenchidos após o upload de uma planilha.
+    setDados(null);
+    setNcmsAgrupados([]);
+    setPaginaAtual(1);
   }, []);
 
   const obterTabelaFiltrada = () => {
