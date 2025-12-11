@@ -416,8 +416,13 @@ export default function Home() {
         {/* Bloco principal agora em layout de página cheia */}
         <section className="space-y-6">
           <div className="bg-gradient-to-r from-[#0b288b] via-[#0b288b] to-[#e85909] px-6 py-4 flex items-center justify-between text-white">
-            <h2 className="text-2xl font-bold">
-              Análise por NCM / CFOP / cClasstrib
+            <h2 className="font-bold leading-tight flex items-center gap-2">
+              <span className="text-xl font-bold">
+                Análise por NCM / CFOP / cClassTrib - 
+              </span>
+              <span className="text-sm font-normal">
+                CFOP de devolução deve sempre ser verificado o cClasstrib da nota fiscal de entrada
+              </span>
             </h2>
             <div className="flex items-center gap-2 text-xs text-[#0b288b]">
               <CheckCircle size={16} />
