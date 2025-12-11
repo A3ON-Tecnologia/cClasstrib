@@ -277,10 +277,11 @@ export default function Home() {
                   href="https://ibsecbspricetax.streamlit.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block text-xs md:text-sm font-semibold text-sky-300 hover:text-sky-200 underline decoration-sky-500/70"
+                  className="inline-block text-xs md:text-sm font-semibold text-white hover:text-sky-200 underline decoration-sky-500/70"
                 >
-                 Faça sua Análise: PRICETAX • IBS/CBS 2026 &amp; Ranking SPED
+                  Faça sua Análise: PRICETAX • IBS/CBS 2026 &amp; Ranking SPED
                 </a>
+
               </div>
             </div>
             <div className="mt-2">
