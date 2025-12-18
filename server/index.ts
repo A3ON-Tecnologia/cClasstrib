@@ -4,6 +4,15 @@ import path from "path";
 import { fileURLToPath } from "url";
 import multer from "multer";
 import * as XLSX from "xlsx";
+import {
+  ensureAdminUser,
+  ensureUserTable,
+  loginHandler,
+  authMiddleware,
+  requireAdmin,
+  createUserHandler,
+  listUsersHandler,
+} from "./auth.js";
 
 interface TabelaItem {
   ncm: string;
@@ -47,6 +56,7 @@ async function startServer() {
   const server = createServer(app);
 
   const upload = multer({ storage: multer.memoryStorage() });
+  app.use(express.json());
 
   // Serve static files from dist/public in production
   const staticPath =
@@ -55,6 +65,13 @@ async function startServer() {
       : path.resolve(__dirname, "..", "dist", "public");
 
   app.use(express.static(staticPath));
+
+  await ensureUserTable();
+  await ensureAdminUser();
+
+  app.post("/api/login", loginHandler);
+  app.post("/api/users", authMiddleware, requireAdmin, createUserHandler);
+  app.get("/api/users", authMiddleware, requireAdmin, listUsersHandler);
 
   // Upload de planilha XLSX e conversão para o formato esperado pelo frontend
   app.post(

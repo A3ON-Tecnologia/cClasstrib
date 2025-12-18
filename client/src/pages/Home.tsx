@@ -1,8 +1,17 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 // LISTA DE ICONES/ COMPONENTES LUCIDE REACT
-import { CheckCircle, ChevronDown, ChevronRight, ArrowLeftRight, CornerDownLeft, CornerDownRight } from "lucide-react";
+import {
+  CheckCircle,
+  ChevronDown,
+  ChevronRight,
+  ArrowLeftRight,
+  CornerDownLeft,
+  CornerDownRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import * as XLSX from "xlsx";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface TabelaItem {
   ncm: string;
@@ -10,6 +19,7 @@ interface TabelaItem {
   cClasstrib_sugerido: string | null;
   qtd_registros: number;
   descricao: string;
+  nome_produto?: string;
 }
 
 interface CasoAusente {
@@ -51,6 +61,7 @@ const formatarCClasstrib = (valor: string | null): string => {
 };
 
 export default function Home() {
+  const { logout } = useAuth();
   const [dados, setDados] = useState<DadosJson | null>(null);
   const [carregando, setCarregando] = useState(false);
   const [arquivo, setArquivo] = useState<File | null>(null);
@@ -60,6 +71,7 @@ export default function Home() {
   const [paginaAtual, setPaginaAtual] = useState(1);
   const [progressoUpload, setProgressoUpload] = useState(0);
   const [mostrarCfopsNa, setMostrarCfopsNa] = useState(false);
+  const [termoBusca, setTermoBusca] = useState("");
 
   // Progresso "simulado" do processamento da planilha
   useEffect(() => {
@@ -89,7 +101,22 @@ export default function Home() {
 
   const obterTabelaFiltrada = () => {
     if (!dados) return [];
-    return dados.tabela_consolidada;
+
+    const termo = termoBusca.trim().toLowerCase();
+    if (!termo) return dados.tabela_consolidada;
+
+    return dados.tabela_consolidada.filter((item) => {
+      const campos = [
+        item.ncm,
+        item.cfop,
+        item.descricao,
+        item.nome_produto ?? "",
+      ];
+
+      return campos.some((campo) =>
+        String(campo ?? "").toLowerCase().includes(termo)
+      );
+    });
   };
 
   // NCM -> CFOP (agrupando NCM+CFOP+cClasstrib)
@@ -147,6 +174,13 @@ export default function Home() {
     setNcmsAgrupados(agrupados);
     setPaginaAtual(1);
   };
+
+  useEffect(() => {
+    if (dados) {
+      atualizarAgrupamento();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [termoBusca]);
 
   const handleArquivoChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
@@ -284,7 +318,15 @@ export default function Home() {
 
               </div>
             </div>
-            <div className="mt-2">
+            <div className="mt-2 flex flex-col items-end gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-slate-500 text-slate-100 hover:bg-slate-800"
+                onClick={logout}
+              >
+                Sair
+              </Button>
               <Button
                 variant="outline"
                 className="rounded-full border-slate-500 text-slate-100 hover:bg-slate-800"
@@ -432,6 +474,20 @@ export default function Home() {
           <div className="flex-1 p-6 space-y-6">
             {ncmsAgrupados.length > 0 ? (
               <>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-sm text-slate-600">
+                    Filtrar por NCM, CFOP, descriÇõÇœo ou produto
+                  </p>
+                  <div className="w-full sm:w-80">
+                    <Input
+                      placeholder="Buscar produto..."
+                      value={termoBusca}
+                      onChange={(e) => setTermoBusca(e.target.value)}
+                      className="bg-white"
+                    />
+                  </div>
+                </div>
+
                 <div className="space-y-3">
                   {ncmsAgrupados
                     .slice((paginaAtual - 1) * 10, paginaAtual * 10)
