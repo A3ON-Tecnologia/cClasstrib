@@ -15,8 +15,12 @@ import {
 } from "./auth.js";
 import {
   ensureCompanyTable,
+  ensureUserCompanyTable,
   createCompanyHandler,
   listCompaniesHandler,
+  linkUserCompanyHandler,
+  unlinkUserCompanyHandler,
+  updateCompanyHandler,
 } from "./company.js";
 
 interface TabelaItem {
@@ -74,12 +78,31 @@ async function startServer() {
   await ensureUserTable();
   await ensureAdminUser();
   await ensureCompanyTable();
+  await ensureUserCompanyTable();
 
   app.post("/api/login", loginHandler);
   app.post("/api/users", authMiddleware, requireAdmin, createUserHandler);
   app.get("/api/users", authMiddleware, requireAdmin, listUsersHandler);
   app.post("/api/companies", authMiddleware, requireAdmin, createCompanyHandler);
-  app.get("/api/companies", authMiddleware, requireAdmin, listCompaniesHandler);
+  app.put(
+    "/api/companies/:id",
+    authMiddleware,
+    requireAdmin,
+    updateCompanyHandler,
+  );
+  app.get("/api/companies", authMiddleware, listCompaniesHandler);
+  app.post(
+    "/api/company-users",
+    authMiddleware,
+    requireAdmin,
+    linkUserCompanyHandler,
+  );
+  app.post(
+    "/api/company-users/unlink",
+    authMiddleware,
+    requireAdmin,
+    unlinkUserCompanyHandler,
+  );
 
   // Upload de planilha XLSX e conversão para o formato esperado pelo frontend
   app.post(

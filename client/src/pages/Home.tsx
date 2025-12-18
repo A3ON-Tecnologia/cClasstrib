@@ -61,7 +61,7 @@ const formatarCClasstrib = (valor: string | null): string => {
 };
 
 export default function Home() {
-  const { logout } = useAuth();
+  const { logout, company } = useAuth();
   const [dados, setDados] = useState<DadosJson | null>(null);
   const [carregando, setCarregando] = useState(false);
   const [arquivo, setArquivo] = useState<File | null>(null);
@@ -285,16 +285,17 @@ export default function Home() {
         <div className="container mx-auto px-6 py-10">
           <div className="flex items-start justify-between gap-6">
             <div className="space-y-6">
-              {/* Nome da empresa + CNPJ no topo */}
+              {/* Nome da empresa + CNPJ no topo (dados do cadastro/admin) */}
               <div className="space-y-2 text-slate-100">
                 <h2 className="text-2xl font-semibold tracking-tight">
-                  {dados?.empresa?.nome || "NOME DA EMPRESA"}
+                  {company?.name || "NOME DA EMPRESA"}
                 </h2>
                 <p className="text-sm font-medium text-slate-300">
                   <span className="font-semibold">CNPJ:</span>{" "}
-                  {dados?.empresa?.cnpj || "Não Encontrado"}
+                  {company?.cnpj || "Não Encontrado"}
                 </p>
               </div>
+
 
               <div className="h-px bg-slate-800" />
 
@@ -460,7 +461,7 @@ export default function Home() {
           <div className="bg-gradient-to-r from-[#0b288b] via-[#0b288b] to-[#e85909] px-6 py-4 flex items-center justify-between text-white">
             <h2 className="font-bold leading-tight flex items-center gap-2">
               <span className="text-xl font-bold">
-                Análise por NCM / CFOP / cClassTrib - 
+                Análise por NCM / CFOP / cClassTrib -
               </span>
               <span className="text-sm font-normal">
                 CFOP de devolução deve sempre ser verificado o cClasstrib da nota fiscal de entrada
