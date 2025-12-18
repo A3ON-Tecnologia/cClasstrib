@@ -82,7 +82,7 @@ export default function Home() {
   const [availableCompanies, setAvailableCompanies] = useState<any[]>([]);
 
   useEffect(() => {
-    if (user?.is_admin && token) {
+    if (token) {
       fetch("/api/companies", {
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -93,7 +93,7 @@ export default function Home() {
         .then((data) => setAvailableCompanies(data))
         .catch((err) => console.error("Erro ao buscar empresas:", err));
     }
-  }, [user, token]);
+  }, [token]);
 
   // Progresso "simulado" do processamento da planilha
   useEffect(() => {
@@ -404,6 +404,37 @@ export default function Home() {
 
 
       <main className="container mx-auto px-4 py-8 space-y-6 bg-white">
+        {/* Seletor de Empresa (Visível para todos que possuem empresas) */}
+        {availableCompanies.length > 0 && (
+          <div className="bg-white rounded-lg shadow-sm p-4 border border-slate-200">
+            <label className="text-sm font-medium text-slate-700 mb-1 block">
+              Selecione a Empresa
+            </label>
+            <Select
+              value={company?.id ? String(company.id) : undefined}
+              onValueChange={(val) => {
+                const selected = availableCompanies.find(
+                  (c) => String(c.id) === val
+                );
+                if (selected && setActiveCompany) {
+                  setActiveCompany(selected);
+                }
+              }}
+            >
+              <SelectTrigger className="w-full md:w-[400px]">
+                <SelectValue placeholder="Selecione a empresa..." />
+              </SelectTrigger>
+              <SelectContent>
+                {availableCompanies.map((c) => (
+                  <SelectItem key={c.id} value={String(c.id)}>
+                    {c.name} (CNPJ: {c.cnpj})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
         {dados && (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* 1) Total de NCM (definidos + não encontrados) */}
@@ -466,33 +497,6 @@ export default function Home() {
                 cClasstrib_sugerido, status, descricao e nome_produto.
               </p>
 
-              <div className="mb-4">
-                <label className="text-sm font-medium text-slate-700 mb-1 block">
-                  Alterar Empresa (Admin)
-                </label>
-                <Select
-                  value={company?.id ? String(company.id) : undefined}
-                  onValueChange={(val) => {
-                    const selected = availableCompanies.find(
-                      (c) => String(c.id) === val
-                    );
-                    if (selected && setActiveCompany) {
-                      setActiveCompany(selected);
-                    }
-                  }}
-                >
-                  <SelectTrigger className="w-full md:w-[400px]">
-                    <SelectValue placeholder="Selecione a empresa..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {availableCompanies.map((c) => (
-                      <SelectItem key={c.id} value={String(c.id)}>
-                        {c.name} (CNPJ: {c.cnpj})
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
               <form
                 className="flex flex-wrap items-center gap-3"
                 onSubmit={handleUpload}
