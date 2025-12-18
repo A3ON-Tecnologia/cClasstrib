@@ -131,6 +131,8 @@ export default function Home() {
         );
 
         if (res.status === 204) {
+          setDados(null);
+          setNcmsAgrupados([]);
           setCarregando(false);
           return;
         }
