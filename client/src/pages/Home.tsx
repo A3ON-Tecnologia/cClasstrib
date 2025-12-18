@@ -61,7 +61,7 @@ const formatarCClasstrib = (valor: string | null): string => {
 };
 
 export default function Home() {
-  const { logout, company } = useAuth();
+  const { logout, company, token } = useAuth() as any;
   const [dados, setDados] = useState<DadosJson | null>(null);
   const [carregando, setCarregando] = useState(false);
   const [arquivo, setArquivo] = useState<File | null>(null);
@@ -91,13 +91,48 @@ export default function Home() {
     return () => window.clearInterval(id);
   }, [enviando]);
 
+    // Ao logar e selecionar a empresa,
+  // sempre busca do backend o último upload daquela empresa.
   useEffect(() => {
-    // Inicialmente, não carrega nenhum dado.
-    // Os valores só serão preenchidos após o upload de uma planilha.
-    setDados(null);
-    setNcmsAgrupados([]);
-    setPaginaAtual(1);
-  }, []);
+    if (!company?.id || !token) return;
+
+    const loadLastUpload = async () => {
+      try {
+        setCarregando(true);
+        const res = await fetch(
+          `/api/company-last-upload?companyId=${company.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        if (res.status === 204) {
+          setCarregando(false);
+          return;
+        }
+
+        if (!res.ok) {
+          console.error("Erro ao buscar último upload da empresa");
+          setCarregando(false);
+          return;
+        }
+
+        const json: DadosJson = await res.json();
+        setDados(json);
+        atualizarAgrupamento(json.tabela_consolidada);
+      } catch (error) {
+        console.error("Erro ao carregar último upload:", error);
+      } finally {
+        setCarregando(false);
+      }
+    };
+
+    void loadLastUpload();
+  }, [company?.id, token]);
+
+
 
   const obterTabelaFiltrada = () => {
     if (!dados) return [];
@@ -200,6 +235,10 @@ export default function Home() {
       const resposta = await fetch("/upload", {
         method: "POST",
         body: formData,
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          ...(company?.id ? { "x-company-id": String(company.id) } : {}),
+        } as HeadersInit,
       });
 
       if (!resposta.ok) {

@@ -22,16 +22,12 @@ import {
   unlinkUserCompanyHandler,
   updateCompanyHandler,
 } from "./company.js";
-
-interface TabelaItem {
-  ncm: string;
-  cfop: string;
-  cClasstrib_sugerido: string | null;
-  qtd_registros: number;
-  status: string;
-  descricao: string;
-  nome_produto: string;
-}
+import type { TabelaItem } from "./types.js";
+import {
+  ensureUploadItemsTable,
+  saveUploadItems,
+  getLastUploadItemsForCompany,
+} from "./uploadStore.js";
 
 interface CasoAusente {
   ncm: string;
@@ -79,6 +75,7 @@ async function startServer() {
   await ensureAdminUser();
   await ensureCompanyTable();
   await ensureUserCompanyTable();
+  await ensureUploadItemsTable();
 
   app.post("/api/login", loginHandler);
   app.post("/api/users", authMiddleware, requireAdmin, createUserHandler);
@@ -107,8 +104,9 @@ async function startServer() {
   // Upload de planilha XLSX e conversão para o formato esperado pelo frontend
   app.post(
     "/upload",
+    authMiddleware,
     upload.single("file"),
-    (req, res) => {
+    async (req, res) => {
       try {
         if (!req.file) {
           return res.status(400).json({ error: "Nenhum arquivo enviado." });
@@ -253,6 +251,24 @@ async function startServer() {
           cfops_na: Array.from(cfopsSemCclasstrib),
         };
 
+        // Salva os dados da planilha na tabela upload_items com vínculo à empresa selecionada
+        try {
+          const companyIdHeader = req.headers["x-company-id"];
+          const companyId = Number(
+            Array.isArray(companyIdHeader) ? companyIdHeader[0] : companyIdHeader,
+          );
+
+          if (Number.isFinite(companyId) && companyId > 0) {
+            await saveUploadItems(tabela_consolidada, companyId);
+          } else {
+            console.warn(
+              "Upload recebido sem company_id válido; itens não serão vinculados a uma empresa.",
+            );
+          }
+        } catch (saveErr) {
+          console.error("Erro ao salvar itens da planilha no banco:", saveErr);
+        }
+
         return res.json(payload);
       } catch (error) {
         console.error("Erro ao processar upload:", error);
@@ -261,6 +277,83 @@ async function startServer() {
         });
       }
     }
+  );
+
+  app.get(
+    "/api/company-last-upload",
+    authMiddleware,
+    async (req, res) => {
+      try {
+        const companyIdRaw = req.query.companyId;
+        const companyId = Number(
+          Array.isArray(companyIdRaw) ? companyIdRaw[0] : companyIdRaw,
+        );
+
+        if (!Number.isFinite(companyId) || companyId <= 0) {
+          return res
+            .status(400)
+            .json({ error: "Parâmetro companyId inválido." });
+        }
+
+        const tabela_consolidada = await getLastUploadItemsForCompany(
+          companyId,
+        );
+
+        if (tabela_consolidada.length === 0) {
+          return res.status(204).send();
+        }
+
+        const casos_ausentes: CasoAusente[] = tabela_consolidada
+          .filter((item) => item.status === "AUSENTE")
+          .map((item) => ({
+            ncm: item.ncm,
+            cfop: item.cfop,
+            qtd_registros: item.qtd_registros,
+            descricao: item.descricao,
+          }));
+
+        const total_combinacoes = tabela_consolidada.length;
+
+        const cfopsSemCclasstrib = new Set<string>();
+        const total_ausente = tabela_consolidada.filter((item) => {
+          const valor = item.cClasstrib_sugerido;
+          const naoTem =
+            !valor || String(valor).trim().toUpperCase() === "N/A";
+
+          if (naoTem) {
+            cfopsSemCclasstrib.add(item.cfop);
+          }
+
+          return naoTem;
+        }).length;
+
+        const total_cfop_na = cfopsSemCclasstrib.size;
+        const total_ok = total_combinacoes - total_ausente;
+
+        const resumo: DadosJson["resumo"] = {
+          total_combinacoes,
+          total_ok,
+          total_ausente,
+          total_multiplo: 0,
+          total_cfop_na,
+        };
+
+        const payload: DadosJson = {
+          tabela_consolidada,
+          casos_ausentes,
+          resumo,
+          empresa: undefined,
+          cfops_na: Array.from(cfopsSemCclasstrib),
+        };
+
+        return res.json(payload);
+      } catch (err) {
+        console.error("Erro ao buscar último upload da empresa:", err);
+        return res
+          .status(500)
+          .json({ error: "Erro ao buscar último upload da empresa." });
+      }
+    },
   );
 
   // Handle client-side routing - serve index.html for all routes
