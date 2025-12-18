@@ -1,0 +1,80 @@
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
+// LISTA DE ICONES/ COMPONENTES LUCIDE REACT
+import {
+  CheckCircle,
+  ChevronDown,
+  ChevronRight,
+  ArrowLeftRight,
+  CornerDownLeft,
+  CornerDownRight,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import * as XLSX from "xlsx";
+import { useAuth } from "@/contexts/AuthContext";
+
+interface TabelaItem {
+  ncm: string;
+  cfop: string;
+  cClasstrib_sugerido: string | null;
+  qtd_registros: number;
+  descricao: string;
+  nome_produto?: string;
+}
+
+interface CasoAusente {
+  ncm: string;
+  cfop: string;
+  qtd_registros: number;
+  descricao: string;
+}
+
+interface DadosJson {
+  tabela_consolidada: TabelaItem[];
+  casos_ausentes: CasoAusente[];
+  resumo: {
+    total_combinacoes: number;
+    total_ok: number;
+    total_ausente: number;
+    total_multiplo: number;
+    total_cfop_na: number;
+  };
+  empresa?: {
+    nome: string;
+    cnpj: string;
+  };
+  cfops_na: string[];
+}
+
+interface NCMAgrupado {
+  ncm: string;
+  descricao: string;
+  cfops: TabelaItem[];
+}
+
+const formatarCClasstrib = (valor: string | null): string => {
+  if (!valor) return "Não Encontrado";
+  const limpo = String(valor).trim();
+  if (!limpo || limpo === "N/A" || limpo === "Não Encontrado")
+    return "Não Encontrado";
+  return limpo.padStart(6, "0");
+};
+
+export default function Home() {
+  const { logout, company, token } = useAuth() as any;
+  const [dados, setDados] = useState<DadosJson | null>(null);
+  const [carregando, setCarregando] = useState(false);
+  const [arquivo, setArquivo] = useState<File | null>(null);
+  const [enviando, setEnviando] = useState(false);
+  const [ncmsAgrupados, setNcmsAgrupados] = useState<NCMAgrupado[]>([]);
+  const [expandidos, setExpandidos] = useState<Set<string>>(new Set());
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const [progressoUpload, setProgressoUpload] = useState(0);
+  const [mostrarCfopsNa, setMostrarCfopsNa] = useState(false);
+  const [termoBusca, setTermoBusca] = useState("");
+
+  // Progresso "simulado" do processamento da planilha
+  useEffect(() => {
+    if (!enviando) {
+      setProgressoUpload(0);
+      return;

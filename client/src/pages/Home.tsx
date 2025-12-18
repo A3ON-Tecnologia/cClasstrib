@@ -10,6 +10,13 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import * as XLSX from "xlsx";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -61,7 +68,7 @@ const formatarCClasstrib = (valor: string | null): string => {
 };
 
 export default function Home() {
-  const { logout, company, token } = useAuth() as any;
+  const { logout, company, token, user, setActiveCompany } = useAuth() as any;
   const [dados, setDados] = useState<DadosJson | null>(null);
   const [carregando, setCarregando] = useState(false);
   const [arquivo, setArquivo] = useState<File | null>(null);
@@ -72,6 +79,21 @@ export default function Home() {
   const [progressoUpload, setProgressoUpload] = useState(0);
   const [mostrarCfopsNa, setMostrarCfopsNa] = useState(false);
   const [termoBusca, setTermoBusca] = useState("");
+  const [availableCompanies, setAvailableCompanies] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (user?.is_admin && token) {
+      fetch("/api/companies", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          if (res.ok) return res.json();
+          throw new Error("Falha ao buscar empresas");
+        })
+        .then((data) => setAvailableCompanies(data))
+        .catch((err) => console.error("Erro ao buscar empresas:", err));
+    }
+  }, [user, token]);
 
   // Progresso "simulado" do processamento da planilha
   useEffect(() => {
@@ -91,7 +113,7 @@ export default function Home() {
     return () => window.clearInterval(id);
   }, [enviando]);
 
-    // Ao logar e selecionar a empresa,
+  // Ao logar e selecionar a empresa,
   // sempre busca do backend o último upload daquela empresa.
   useEffect(() => {
     if (!company?.id || !token) return;
@@ -436,64 +458,94 @@ export default function Home() {
 
 
 
-        <div className="bg-white rounded-lg shadow-sm p-4">
-          <div>
-            <p className="text-sm font-semibold text-slate-800 mb-2">
-              Selecione uma planilha XLSX com as colunas NCM, CFOP,
-              cClasstrib_sugerido, status, descricao e nome_produto.
-            </p>
-            <form
-              className="flex flex-wrap items-center gap-3"
-              onSubmit={handleUpload}
-            >
-              <label className="inline-flex items-center gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="rounded-full"
-                  onClick={() =>
-                    document.getElementById("arquivo-upload")?.click()
-                  }
-                >
-                  Procurar
-                </Button>
-                <span className="text-sm text-slate-600">
-                  {arquivo ? arquivo.name : "Nenhum arquivo escolhido"}
-                </span>
-                <input
-                  id="arquivo-upload"
-                  type="file"
-                  accept=".xlsx"
-                  onChange={handleArquivoChange}
-                  className="hidden"
-                />
-              </label>
-              <Button
-                type="submit"
-                disabled={!arquivo || enviando}
-                className="rounded-full"
-              >
-                {enviando ? "Enviando..." : "Enviar planilha"}
-              </Button>
-            </form>
+        {user?.is_admin && (
+          <div className="bg-white rounded-lg shadow-sm p-4">
+            <div>
+              <p className="text-sm font-semibold text-slate-800 mb-2">
+                Selecione uma planilha XLSX com as colunas NCM, CFOP,
+                cClasstrib_sugerido, status, descricao e nome_produto.
+              </p>
 
-            {enviando && (
-              <div className="mt-3 w-full">
-                <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
-                  <div
-                    className="h-2 bg-gradient-to-r from-[#0b288b] to-[#e85909] transition-all duration-150"
-                    style={{ width: `${progressoUpload}%` }}
-                  />
-                </div>
-                <p className="mt-1 text-xs font-medium text-slate-700">
-                  {progressoUpload}% processando planilha...
-                </p>
+              <div className="mb-4">
+                <label className="text-sm font-medium text-slate-700 mb-1 block">
+                  Alterar Empresa (Admin)
+                </label>
+                <Select
+                  value={company?.id ? String(company.id) : undefined}
+                  onValueChange={(val) => {
+                    const selected = availableCompanies.find(
+                      (c) => String(c.id) === val
+                    );
+                    if (selected && setActiveCompany) {
+                      setActiveCompany(selected);
+                    }
+                  }}
+                >
+                  <SelectTrigger className="w-full md:w-[400px]">
+                    <SelectValue placeholder="Selecione a empresa..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {availableCompanies.map((c) => (
+                      <SelectItem key={c.id} value={String(c.id)}>
+                        {c.name} (CNPJ: {c.cnpj})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-            )}
+              <form
+                className="flex flex-wrap items-center gap-3"
+                onSubmit={handleUpload}
+              >
+                <label className="inline-flex items-center gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="rounded-full"
+                    onClick={() =>
+                      document.getElementById("arquivo-upload")?.click()
+                    }
+                  >
+                    Procurar
+                  </Button>
+                  <span className="text-sm text-slate-600">
+                    {arquivo ? arquivo.name : "Nenhum arquivo escolhido"}
+                  </span>
+                  <input
+                    id="arquivo-upload"
+                    type="file"
+                    accept=".xlsx"
+                    onChange={handleArquivoChange}
+                    className="hidden"
+                  />
+                </label>
+                <Button
+                  type="submit"
+                  disabled={!arquivo || enviando}
+                  className="rounded-full"
+                >
+                  {enviando ? "Enviando..." : "Enviar planilha"}
+                </Button>
+              </form>
+
+              {enviando && (
+                <div className="mt-3 w-full">
+                  <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
+                    <div
+                      className="h-2 bg-gradient-to-r from-[#0b288b] to-[#e85909] transition-all duration-150"
+                      style={{ width: `${progressoUpload}%` }}
+                    />
+                  </div>
+                  <p className="mt-1 text-xs font-medium text-slate-700">
+                    {progressoUpload}% processando planilha...
+                  </p>
+                </div>
+              )}
+
+            </div>
 
           </div>
-
-        </div>
+        )}
 
         {/* Bloco principal agora em layout de página cheia */}
         <section className="space-y-6">
