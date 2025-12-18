@@ -10,12 +10,19 @@ export default function Admin() {
   const [users, setUsers] = useState<
     { id: number; username: string; is_admin: boolean }[]
   >([]);
+  const [companies, setCompanies] = useState<
+    { id: number; name: string; address: string | null; cnpj: string }[]
+  >([]);
   const [search, setSearch] = useState("");
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [companyName, setCompanyName] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [companyCnpj, setCompanyCnpj] = useState("");
+  const [submittingCompany, setSubmittingCompany] = useState(false);
 
   if (!user) {
     return null;
@@ -42,9 +49,25 @@ export default function Admin() {
     }
   }
 
+  async function fetchCompanies() {
+    if (!token) return;
+    try {
+      const res = await axios.get("/api/companies", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setCompanies(res.data ?? []);
+    } catch (err: any) {
+      const msg = err?.response?.data?.error ?? "Erro ao buscar empresas";
+      toast.error(msg);
+    }
+  }
+
   useEffect(() => {
     if (isAdminUser) {
       fetchUsers();
+      fetchCompanies();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAdminUser]);
@@ -84,6 +107,44 @@ export default function Admin() {
       toast.error(msg);
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  async function handleCreateCompany(e: FormEvent) {
+    e.preventDefault();
+    if (!companyName.trim() || !companyCnpj.trim()) {
+      toast.error("Nome e CNPJ são obrigatórios");
+      return;
+    }
+    if (!isAdminUser) {
+      toast.error("Somente administradores podem cadastrar empresas");
+      return;
+    }
+    try {
+      setSubmittingCompany(true);
+      await axios.post(
+        "/api/companies",
+        {
+          name: companyName,
+          address: companyAddress || undefined,
+          cnpj: companyCnpj,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      toast.success("Empresa cadastrada com sucesso");
+      setCompanyName("");
+      setCompanyAddress("");
+      setCompanyCnpj("");
+      fetchCompanies();
+    } catch (err: any) {
+      const msg = err?.response?.data?.error ?? "Erro ao cadastrar empresa";
+      toast.error(msg);
+    } finally {
+      setSubmittingCompany(false);
     }
   }
 
@@ -154,6 +215,88 @@ export default function Admin() {
                   {submitting ? "Salvando..." : "Criar usuário"}
                 </Button>
               </form>
+            </section>
+
+            <section className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 md:col-span-2">
+              <h2 className="text-base font-semibold text-slate-900 mb-1">
+                Cadastro de empresas
+              </h2>
+              <p className="text-xs text-slate-500 mb-4">
+                Cadastre empresas com nome, endereço e CNPJ. Nome e CNPJ são
+                obrigatórios.
+              </p>
+
+              <form
+                onSubmit={handleCreateCompany}
+                className="grid gap-4 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)_minmax(0,2fr)_auto]"
+              >
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-slate-700">
+                    Nome *
+                  </label>
+                  <Input
+                    value={companyName}
+                    onChange={(e) => setCompanyName(e.target.value)}
+                    placeholder="Nome da empresa"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-slate-700">
+                    Endereço
+                  </label>
+                  <Input
+                    value={companyAddress}
+                    onChange={(e) => setCompanyAddress(e.target.value)}
+                    placeholder="Rua, número, cidade"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-slate-700">
+                    CNPJ *
+                  </label>
+                  <Input
+                    value={companyCnpj}
+                    onChange={(e) => setCompanyCnpj(e.target.value)}
+                    placeholder="CNPJ"
+                  />
+                </div>
+                <div className="flex items-end">
+                  <Button type="submit" disabled={submittingCompany}>
+                    {submittingCompany ? "Salvando..." : "Cadastrar"}
+                  </Button>
+                </div>
+              </form>
+
+              <div className="mt-5 border border-slate-200 rounded-lg max-h-72 overflow-y-auto">
+                {companies.length === 0 ? (
+                  <p className="text-sm text-slate-500 p-4">
+                    Nenhuma empresa cadastrada.
+                  </p>
+                ) : (
+                  <ul className="divide-y divide-slate-200">
+                    {companies.map((c) => (
+                      <li
+                        key={c.id}
+                        className="px-4 py-2.5 flex flex-col md:flex-row md:items-center md:justify-between gap-2"
+                      >
+                        <div>
+                          <p className="text-sm font-medium text-slate-900">
+                            {c.name}
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            CNPJ: {c.cnpj}
+                          </p>
+                        </div>
+                        {c.address && (
+                          <p className="text-xs text-slate-500">
+                            Endereço: {c.address}
+                          </p>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </section>
 
             <section className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">

@@ -20,9 +20,13 @@ export default function Login() {
     }
     try {
       setSubmitting(true);
-      await login(username, password);
+      const loggedUser = await login(username, password);
       toast.success("Login realizado com sucesso");
-      setLocation("/home");
+      if (loggedUser.is_admin) {
+        setLocation("/admin");
+      } else {
+        setLocation("/home");
+      }
     } catch (err: any) {
       const msg = err?.response?.data?.error ?? "Erro ao fazer login";
       toast.error(msg);
@@ -33,7 +37,11 @@ export default function Login() {
 
   useEffect(() => {
     if (!loading && user) {
-      setLocation("/home");
+      if (user.is_admin) {
+        setLocation("/admin");
+      } else {
+        setLocation("/home");
+      }
     }
   }, [loading, user, setLocation]);
 

@@ -13,6 +13,11 @@ import {
   createUserHandler,
   listUsersHandler,
 } from "./auth.js";
+import {
+  ensureCompanyTable,
+  createCompanyHandler,
+  listCompaniesHandler,
+} from "./company.js";
 
 interface TabelaItem {
   ncm: string;
@@ -68,10 +73,13 @@ async function startServer() {
 
   await ensureUserTable();
   await ensureAdminUser();
+  await ensureCompanyTable();
 
   app.post("/api/login", loginHandler);
   app.post("/api/users", authMiddleware, requireAdmin, createUserHandler);
   app.get("/api/users", authMiddleware, requireAdmin, listUsersHandler);
+  app.post("/api/companies", authMiddleware, requireAdmin, createCompanyHandler);
+  app.get("/api/companies", authMiddleware, requireAdmin, listCompaniesHandler);
 
   // Upload de planilha XLSX e conversão para o formato esperado pelo frontend
   app.post(
