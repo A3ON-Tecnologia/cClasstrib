@@ -92,8 +92,15 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      <div className="w-full max-w-sm bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-orange-500 px-4">
+      <div className="w-full max-w-sm bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl border border-white/20 p-6">
+        <div className="flex justify-center mb-6">
+          <img
+            src="/logo_v2.png"
+            alt="Logo"
+            className="h-24 w-auto object-contain mix-blend-multiply"
+          />
+        </div>
         <h1 className="text-xl font-semibold text-slate-900 mb-1">
           Acesso ao sistema
         </h1>
@@ -136,8 +143,8 @@ export default function Login() {
       </div>
 
       {selectingCompany && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="w-full max-w-md bg-white rounded-xl shadow-lg border border-slate-200 p-6">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="w-full max-w-md bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl border border-white/20 p-6">
             <h2 className="text-lg font-semibold text-slate-900 mb-2">
               Selecione a empresa
             </h2>
