@@ -28,6 +28,7 @@ import {
   saveUploadItems,
   getLastUploadItemsForCompany,
 } from "./uploadStore.js";
+import { listNbsHandler } from "./nbs.js";
 
 interface CasoAusente {
   ncm: string;
@@ -100,6 +101,9 @@ async function startServer() {
     requireAdmin,
     unlinkUserCompanyHandler,
   );
+
+  // Endpoint NBS
+  app.get("/api/nbs", authMiddleware, listNbsHandler);
 
   // Upload de planilha XLSX e conversão para o formato esperado pelo frontend
   app.post(

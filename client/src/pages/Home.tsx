@@ -1,4 +1,5 @@
 import { useState, useEffect, ChangeEvent, FormEvent, useMemo } from "react";
+import { Link } from "wouter";
 // LISTA DE ICONES/ COMPONENTES LUCIDE REACT
 import {
   CheckCircle,
@@ -90,6 +91,12 @@ export default function Home() {
     });
     return Array.from(set).sort();
   }, [ncmsAgrupados, filtroStatus]);
+
+  const totalNCMs = useMemo(() => {
+    if (!dados?.tabela_consolidada) return 0;
+    const uniqueNcms = new Set(dados.tabela_consolidada.map((item) => item.ncm));
+    return uniqueNcms.size;
+  }, [dados]);
 
   useEffect(() => {
     if (token) {
@@ -418,14 +425,24 @@ export default function Home() {
               >
                 Sair
               </Button>
-              <Button
-                variant="outline"
-                className="rounded-full border-slate-500 text-slate-100 hover:bg-slate-800"
-                onClick={handleExportExcel}
-                disabled={!ncmsAgrupados.length}
-              >
-                Exportar para Excel
-              </Button>
+              <div className="flex items-center gap-2">
+                <Link href="/consulta-nbs">
+                  <Button
+                    variant="outline"
+                    className="rounded-full border-[#0b288b] text-[#0b288b] bg-white hover:bg-slate-100"
+                  >
+                    Consulta NBS
+                  </Button>
+                </Link>
+                <Button
+                  variant="outline"
+                  className="rounded-full border-slate-500 text-slate-100 hover:bg-slate-800"
+                  onClick={handleExportExcel}
+                  disabled={!ncmsAgrupados.length}
+                >
+                  Exportar para Excel
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -473,7 +490,7 @@ export default function Home() {
                 }`}
             >
               <div className="text-3xl font-bold text-[#0b288b] mb-2">
-                {dados.resumo.total_combinacoes}
+                {totalNCMs}
               </div>
               <p className="text-slate-600 text-sm">
                 Total de NCM analisados
@@ -530,71 +547,74 @@ export default function Home() {
               <p className="text-slate-600 text-sm">CFOPs Não Encontrados</p>
             </div>
           </div>
-        )}
+        )
+        }
 
 
 
-        {user?.is_admin && (
-          <div className="bg-white rounded-lg shadow-sm p-4">
-            <div>
-              <p className="text-sm font-semibold text-slate-800 mb-2">
-                Selecione uma planilha XLSX com as colunas NCM, CFOP,
-                cClasstrib_sugerido, status, descricao e nome_produto.
-              </p>
+        {
+          user?.is_admin && (
+            <div className="bg-white rounded-lg shadow-sm p-4">
+              <div>
+                <p className="text-sm font-semibold text-slate-800 mb-2">
+                  Selecione uma planilha XLSX com as colunas NCM, CFOP,
+                  cClasstrib_sugerido, status, descricao e nome_produto.
+                </p>
 
-              <form
-                className="flex flex-wrap items-center gap-3"
-                onSubmit={handleUpload}
-              >
-                <label className="inline-flex items-center gap-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="rounded-full"
-                    onClick={() =>
-                      document.getElementById("arquivo-upload")?.click()
-                    }
-                  >
-                    Procurar
-                  </Button>
-                  <span className="text-sm text-slate-600">
-                    {arquivo ? arquivo.name : "Nenhum arquivo escolhido"}
-                  </span>
-                  <input
-                    id="arquivo-upload"
-                    type="file"
-                    accept=".xlsx"
-                    onChange={handleArquivoChange}
-                    className="hidden"
-                  />
-                </label>
-                <Button
-                  type="submit"
-                  disabled={!arquivo || enviando}
-                  className="rounded-full"
+                <form
+                  className="flex flex-wrap items-center gap-3"
+                  onSubmit={handleUpload}
                 >
-                  {enviando ? "Enviando..." : "Enviar planilha"}
-                </Button>
-              </form>
-
-              {enviando && (
-                <div className="mt-3 w-full">
-                  <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
-                    <div
-                      className="h-2 bg-gradient-to-r from-[#0b288b] to-[#e85909] transition-all duration-150"
-                      style={{ width: `${progressoUpload}%` }}
+                  <label className="inline-flex items-center gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="rounded-full"
+                      onClick={() =>
+                        document.getElementById("arquivo-upload")?.click()
+                      }
+                    >
+                      Procurar
+                    </Button>
+                    <span className="text-sm text-slate-600">
+                      {arquivo ? arquivo.name : "Nenhum arquivo escolhido"}
+                    </span>
+                    <input
+                      id="arquivo-upload"
+                      type="file"
+                      accept=".xlsx"
+                      onChange={handleArquivoChange}
+                      className="hidden"
                     />
+                  </label>
+                  <Button
+                    type="submit"
+                    disabled={!arquivo || enviando}
+                    className="rounded-full"
+                  >
+                    {enviando ? "Enviando..." : "Enviar planilha"}
+                  </Button>
+                </form>
+
+                {enviando && (
+                  <div className="mt-3 w-full">
+                    <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
+                      <div
+                        className="h-2 bg-gradient-to-r from-[#0b288b] to-[#e85909] transition-all duration-150"
+                        style={{ width: `${progressoUpload}%` }}
+                      />
+                    </div>
+                    <p className="mt-1 text-xs font-medium text-slate-700">
+                      {progressoUpload}% processando planilha...
+                    </p>
                   </div>
-                  <p className="mt-1 text-xs font-medium text-slate-700">
-                    {progressoUpload}% processando planilha...
-                  </p>
-                </div>
-              )}
+                )}
+
+              </div>
 
             </div>
-
-          </div>
-        )}
+          )
+        }
 
         {/* Bloco principal agora em layout de página cheia */}
         <section className="space-y-6">
@@ -827,7 +847,7 @@ export default function Home() {
             )}
           </div>
         </section>
-      </main>
-    </div>
+      </main >
+    </div >
   );
 }

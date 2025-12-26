@@ -7,6 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
+import NBSQuery from "./pages/NBSQuery";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
 function PrivateRoute({
@@ -31,6 +32,7 @@ function Router() {
       <Route path={"/"} component={() => <Redirect to="/login" />} />
       <Route path={"/login"} component={Login} />
       <Route path={"/home"} component={() => <PrivateRoute component={Home} />} />
+      <Route path={"/consulta-nbs"} component={() => <PrivateRoute component={NBSQuery} />} />
       <Route
         path={"/admin"}
         component={() => <PrivateRoute component={Admin} requireAdmin />}

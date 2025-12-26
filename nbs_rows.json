@@ -1,0 +1,92 @@
+[
+  [
+    "Item LC 116",
+    "Descrição Item",
+    "NBS",
+    "DESCRIÇÃO NBS",
+    "PS ONEROSA? (S/N)",
+    "ADQ EXTERIOR? (S/N)",
+    "INDOP",
+    "Local incidência IBS",
+    "cClassTrib",
+    "nome cClassTrib"
+  ],
+  [
+    "01.01",
+    "Análise E Desenvolvimento De Sistemas.",
+    "1.1502.10.00",
+    "Serviços de projeto, desenvolvimento e instalação de aplicativos e programas não personalizados (não customizados) ",
+    "S",
+    "N",
+    100301,
+    "Domicílio principal do adquirente",
+    "000001",
+    "Situações tributadas integralmente pelo IBS e CBS."
+  ],
+  [
+    null,
+    null,
+    "1.1502.20.00",
+    "Serviços de projeto e desenvolvimento, adaptação e instalação de aplicativos e programas personalizados (customizados) "
+  ],
+  [
+    null,
+    null,
+    "1.1502.40.00",
+    "Serviços de projeto e desenvolvimento de estruturas e conteúdo de bancos de dados "
+  ],
+  [
+    null,
+    null,
+    "1.1502.50.00",
+    "Serviços de integração de sistemas em tecnologia da informação (TI) "
+  ],
+  [
+    null,
+    null,
+    "1.1502.90.00",
+    "Serviços de projeto e desenvolvimento de aplicativos e programas em tecnologia da informação (TI) não classificados em subposições anteriores"
+  ],
+  [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    "200043",
+    "Fornecimento à administração pública dos serviços e dos bens relativos à soberania (Anexo XI)"
+  ],
+  [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    "200044",
+    "Operações e prestações de serviços de segurança da informação e segurança cibernética desenvolvidos por sociedade que tenha sócio brasileiro (Anexo XI)"
+  ],
+  [
+    null,
+    null,
+    "1.1503.00.00",
+    "Serviços de projeto e desenvolvimento de redes em tecnologia da informação (TI) ",
+    null,
+    null,
+    null,
+    null,
+    "000001",
+    "Situações tributadas integralmente pelo IBS e CBS."
+  ],
+  [
+    null,
+    null,
+    "1.1504.00.00",
+    "Serviços de projeto e desenvolvimento de topografias de circuitos integrados "
+  ]
+]
